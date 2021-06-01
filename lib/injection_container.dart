@@ -2,16 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_new_model_test/app_config.dart';
-import 'package:flutter_new_model_test/features/new_feature/injection_container.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final sl = GetIt.instance;
 
 const globalDio = 'global';
 
-class InjectionContainer extends Injector
-    with
-        NewFeatureInjector {}
+class InjectionContainer extends Injector {}
 
 abstract class Injector {
   @mustCallSuper
@@ -26,7 +24,7 @@ abstract class Injector {
         ));
         dio
           ..options.headers = {"content-type": "application/json", "Accept": "application/json"}
-          ..interceptors.add(LogInterceptor(
+          ..interceptors.add(PrettyDioLogger(
             responseBody: true,
             requestBody: true,
             requestHeader: true,
